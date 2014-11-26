@@ -2,10 +2,35 @@ Summary
 =======
 
 This document provides information about the BitMarket.net API. 
+For a quick start, you can jump to the [PHP sample code](#info_sample).
+
+Table of contents
+-----------------
+
+ * API basics
+   * [How to access the API?](#info_access)
+   * [API keys](#info_keys)
+   * [Message signing](#info_signing)
+   * [The tonce parameter](#info_tonce)
+   * [Call limits](#info_limits)
+   * [Server responses](#info_responses)
+   * [Sample code](#info_sample)
+   * [Sample return values](#info_return)
+   * [Error codes](#info_codes)
+ * Method list
+   * [info](#api_info) - account information
+   * [trade](#api_trade) - submit an order
+   * [cancel](#api_cancel) - order cancel
+   * [orders](#api_orders) - list of user orders
+   * [trades](#api_trades) - list of user trades
+   * [history](#api_history) - account operation history
+   * [withdraw](#api_withdraw) - withdraw cryptocurrency
+   * [deposit](#api_deposit) - deposit cryptocurrency
 
 How to access the API?
 ----------------------
 
+<a name="info_access"></a>
 To make an API call, you need to send a POST request to the following address:
 https://www.bitmarket.pl/api2/
 
@@ -14,6 +39,7 @@ There are two parameters that must be sent woth every request: `method` which se
 and `tonce` which contains the time parameter and is used to avoid replay attacks.
 All the other parameters dopend on the API method used.
 
+<a name="info_keys"></a>
 ### API keys
 
 To call the API functions, it is necessary first to obtain an API key. 
@@ -30,6 +56,7 @@ Each key contains the following components:
  
 The public key component must be passed in the `API-Key` HTTP header with every API call.
 
+<a name="info_sign"></a>
 ### Message signing
 
 The parameters of every API call must be signed to create a HMAC signature. 
@@ -38,6 +65,7 @@ This ensures that even if someone learns the public key component, they will sti
 
 The HMAC signature must be passed in the `API-Hash` HTTP header with every API call.
 
+<a name="info_tonce"></a>
 ### The tonce parameter
 
 The `tonce` parameter is required with every API call to secure the API from replay attacks.
@@ -52,11 +80,13 @@ It is important that the time on the computer used to send API calls is also pro
 to avoid mismatches in the timestamps. 
 Proper NTP software, such as the **ntpd** Unix daemon, can be used to ensure this.
 
-### API call limit
+<a name="info_limits"></a>
+### Call limits
 
 The number of API calls that can be made on the user account is limited to 600 calls within 10 minutes. 
 This limit is global for the user account, regardless of how many API keys the user is using.
 
+<a name="info_reponses"></a>
 ### Server responses
 
 The API server sends responses to API calls in the JSON format. 
@@ -72,6 +102,7 @@ with the following fields:
 If the API call does not succeed, the returned object contains a field `error` with the error number,
 as well as an `errorMsg` field with the textual error description.
 
+<a name="info_sample"></a>
 ### Sample code
 
 This sample PHP code can be used to send API calls to the server:
@@ -104,6 +135,7 @@ function bitmarket_api($method, $params = array())
 }
 ```
 
+<a name="info_return"></a>
 ### Sample return values
 
 Here is a smaple JSON object returned afther a successful `info` method call:
@@ -147,6 +179,7 @@ Here is an example of an error message:
 }
 ```
 
+<a name="info_codes"></a>
 ### Error codes
 
 The following error codes can be returned from the application:
@@ -178,6 +211,7 @@ API method list
 The list of currently supported API methods is presented below. 
 The method name must always be passed in the `method` parameter.
 
+<a name="api_info"></a>
 ### `info` - account information
 
 Input parameters:
@@ -190,6 +224,7 @@ Output parameters:
    * `available` - object describing free funds available in each currency.
    * `blocked` - object describing funds in active trade offers, in each currency.
 
+<a name="api_trade"></a>
 ### `trade` - submit an order
 
 Input parameters:
@@ -221,6 +256,7 @@ Please note that there are three possible scenarios when a trade is submitted:
  3. The trade is not immediately exdecuted, and the order is submitted in the orderbook in full. 
  In such case the `order` field will contain the copy of the input parameters.
  
+<a name="api_cancel"></a>
 ### `cancel` - order cancel
 
 Input parameters:
@@ -231,7 +267,8 @@ Output parameters:
 
  * `balances` - account balances after canceling the order.
  
-### `order` - user order list
+<a name="api_orders"></a>
+### `orders` - list of user orders
 
 Input parameters:
 
@@ -244,7 +281,32 @@ Otherwise an object is returned with the following fields:
  * `buy` - list of buy orders (in the format identical to that returned from the `order` method).
  * `sell` - list of sell orders.
 
-### `history` - account history
+<a name="api_trades"></a>
+### `trades` - list of user trades
+
+Input parameters:
+
+ * `market` - market where the trades took place, for example *"BTCEUR"*.
+ * `count` - number of list elements, possible values: from 1 to 1000 (1000 is the default).
+ * `start` - number of the first element, zero based (0 is the default).
+ 
+Output parameters:
+
+ * `total` - total number of elements.
+ * `start` - number of the first list element.
+ * `count` - number of returned list elements.
+ * `results` - the list of trades, each object has the following parameters:
+   * `id` - trade identifier.
+   * `type` - trade type (*"buy"* or *"sell"*).
+   * `amountCrypto` - cryptocurrency amount.
+   * `currencyCrypto` - crptocurrency code (for example *"BTC"*).
+   * `amountFiat` - fiat amount.
+   * `currencyFiat` - fiat currency code (for example *"EUR"*).
+   * `rate` - exchange rate.
+   * `time` - trade time.
+
+<a name="api_history"></a>
+### `history` - account operation history
 
 Input parameters:
 
@@ -272,29 +334,7 @@ Output parameters:
      * *"trade"* - market trade.
      * *"cancel"* - order cancellation.
 
-### `trades` - list of market trades
-
-Input parameters:
-
- * `market` - market where the trades took place, for example *"BTCEUR"*.
- * `count` - number of list elements, possible values: from 1 to 1000 (1000 is the default).
- * `start` - number of the first element, zero based (0 is the default).
- 
-Output parameters:
-
- * `total` - total number of elements.
- * `start` - number of the first list element.
- * `count` - number of returned list elements.
- * `results` - the list of trades, each object has the following parameters:
-   * `id` - trade identifier.
-   * `type` - trade type (*"buy"* or *"sell"*).
-   * `amountCrypto` - cryptocurrency amount.
-   * `currencyCrypto` - crptocurrency code (for example *"BTC"*).
-   * `amountFiat` - fiat amount.
-   * `currencyFiat` - fiat currency code (for example *"EUR"*).
-   * `rate` - exchange rate.
-   * `time` - trade time.
-
+<a name="api_withdraw"></a>
 ### `withdraw` - withdraw cryptocurrency
 
 Input parameters:
@@ -305,6 +345,7 @@ Input parameters:
 
 Output value: the withdrawal transaction ID.
 
+<a name="api_deposit"></a>
 ### `deposit` - deposit cryptocurrency
 
 Input parameters:
