@@ -56,7 +56,7 @@ Each key contains the following components:
  
 The public key component must be passed in the `API-Key` HTTP header with every API call.
 
-<a name="info_sign"></a>
+<a name="info_signing"></a>
 ### Message signing
 
 The parameters of every API call must be signed to create a HMAC signature. 
@@ -86,7 +86,7 @@ Proper NTP software, such as the **ntpd** Unix daemon, can be used to ensure thi
 The number of API calls that can be made on the user account is limited to 600 calls within 10 minutes. 
 This limit is global for the user account, regardless of how many API keys the user is using.
 
-<a name="info_reponses"></a>
+<a name="info_responses"></a>
 ### Server responses
 
 The API server sends responses to API calls in the JSON format. 
@@ -203,6 +203,7 @@ Error code | Error description
 407 | Invalid value of the `currency` parameter
 408 | Invalid value of the `count` parameter
 409 | Invalid value of the `start` parameter
+410 | Invalid value of the `address` parameter.
 300 | Internal application error
 
 API method list
