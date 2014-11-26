@@ -295,3 +295,21 @@ Output parameters:
    * `rate` - exchange rate.
    * `time` - trade time.
 
+### `withdraw` - withdraw cryptocurrency
+
+Input parameters:
+
+ * `amount` - amount to withdraw.
+ * `currency` - cryptocurrency code (like *"BTC"*).
+ * `address` - wallet address where the funds must be withdrawn.
+
+Output value: the withdrawal transaction ID.
+
+### `deposit` - deposit cryptocurrency
+
+Input parameters:
+
+ * `currency` - cryptocurrency code (like "*BTC*").
+
+Output value: the address for cryptocurrency deposits to the account.
+
