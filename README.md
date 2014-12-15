@@ -26,6 +26,9 @@ Table of contents
    * [history](#api_history) - account operation history
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [deposit](#api_deposit) - deposit cryptocurrency
+   * [swapList](#api_swapList) - swap contract list
+   * [swapOpen](#api_swapOpen) - open swap contract
+   * [swapClose](#api_swapClose) - close swap contract
 
 How to access the API?
 ----------------------
@@ -355,3 +358,41 @@ Input parameters:
 
 Output value: the address for cryptocurrency deposits to the account.
 
+<a name="api_swapList"></a>
+### `swapList` - list swap contracts
+
+Input parameters:
+
+ * `currency` - cryptocurrency code (like "*BTC*").
+
+Output value: array of objects describing active contracts on user account, with the following propertied for each object:
+
+ * `id` - contract identifier.
+ * `amount` - contract base amount.
+ * `rate` - contract interest rate.
+ * `earnings` - earnings accrued on contract.
+
+<a name="api_swapOpen"></a>
+### `swapOpen` - open swap contract
+
+Input parameters:
+
+ * `currency` - cryptocurrency code (like "*BTC*").
+ * `amount` - contract amount.
+ * `rate` - contract percentage rate.
+
+Output parameters:
+
+ * `id` - contract identifier.
+ * `balances` - balances on the account.
+
+<a name="api_swapClose"></a>
+### `swapClose` - close swap contract
+
+Input parameters:
+
+ * `id` - contract identifier.
+
+Output parameters:
+
+ * `balances` - balances on the account.
