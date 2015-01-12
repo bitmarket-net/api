@@ -26,6 +26,11 @@ Table of contents
    * [history](#api_history) - account operation history
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [deposit](#api_deposit) - deposit cryptocurrency
+   * [marginList](#api_marginList) - list of open positions
+   * [marginOpen](#api_marginOpen) - open a long or short position
+   * [marginClose](#api_marginClose) - close a position
+   * [marginCancel](#api_marginCancel) - cancel opening a position
+   * [marginModify](#api_marginModify) - modify position parameters
    * [swapList](#api_swapList) - swap contract list
    * [swapOpen](#api_swapOpen) - open swap contract
    * [swapClose](#api_swapClose) - close swap contract
@@ -207,6 +212,10 @@ Error code | Error description
 408 | Invalid value of the `count` parameter
 409 | Invalid value of the `start` parameter
 410 | Invalid value of the `address` parameter.
+411 | Invalid value of the `id` parameter.
+412 | Invalid value of the `type` parameter.
+413 | Invalid value of the `rateLoss` parameter.
+414 | Invalid value of the `rateProfit` parameter.
 300 | Internal application error
 
 API method list
@@ -357,6 +366,98 @@ Input parameters:
  * `currency` - cryptocurrency code (like "*BTC*").
 
 Output value: the address for cryptocurrency deposits to the account.
+
+<a name="api_marginList"></a>
+### `marginList` - list of open positions
+
+Input parameters:
+
+ * `market` - the market from which the position list must be returned.
+
+Return value:
+
+ * `long` - list of open long positions, each object has the following parameters:
+   *  `id` - position identifier.
+   *  `type` - position type (*"long"* or *"short"*).
+   *  `time` - time when the position was submitted.
+   *  `leverage` - leverage value.
+   *  `fiatTotal` - total position value in fiat currency.
+   *  `fiatOpened` - opened amount.
+   *  `fiatClosed` - closed amount.
+   *  `security` - blocked secutory deposit (in cryptocurrency).
+   *  `rate` - requested position open rate.
+   *  `rateOpen` - real position open rate.
+   *  `rateClose` - position closing rate (if partially closed).
+   *  `rateLoss` - Stop Loss rate.
+   *  `rateProfit` - Take Profit rate.
+   *  `rateCurrent` - current position rate (according to the market orderbook).
+   *  `fees` - sum of charged fees.
+   *  `profit` - current position profit (in cryptocurrency).
+   *  `profitPercentage` - current position profit (in percent).
+
+* `short` - list of open short positions (same as above).
+* `performance` - object describing total account performance:
+   * `balance` - amount of deposited security guarantee.
+   * `blocked` - amount of security guarantee blocked for open positions.
+   * `available` - amount of available security guarantee.
+   * `profit` - current profit from open positions.
+   * `profitPercentage` - current profit (in percent).
+   * `value` - final value of the account.
+
+<a name="api_marginOpen"></a>
+### `marginOpen` - open a position
+
+Input parameters:
+
+ * `market` - the market on which the position must be opened.
+ * `type` - position type (*"long"* or *"short"*).
+ * `leverage` - levarage value (from 1.5 to 10).
+ * `amount` - position value (in fiat currency).
+ * `rate` - position open rate (0 means "at current market rate").
+ * `rateLoss` - Stop Loss rate (0 means "do not use Stop Loss").
+ * `rateProfit` - Take Profit rate (0 means "do not use Take Profit").
+
+Return value:
+ * `id` - identifier of a newly opened position.
+ * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
+
+<a name="api_marginClose"></a>
+### `marginClose` - close a position
+
+Input parameters:
+
+ * `market` - the market on which the position must be opened.
+ * `id` - position identifier.
+ * `amount` - amount to close (up to position value).
+
+Return value:
+ * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
+
+<a name="api_marginCancel"></a>
+### `marginCancel` - cancel opening a position (by lowering its value)
+
+Input parameters:
+
+ * `market` - the market on which the position must be opened.
+ * `id` - position identifier.
+ * `amount` - new position value.
+
+Return value:
+ * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
+
+<a name="api_marginModify"></a>
+### `marginModify` - open a position
+
+Input parameters:
+
+ * `market` - the market on which the position must be opened.
+ * `id` - position identifier.
+ * `rate` - new position open rate (meaningful only if the position is not open).
+ * `rateLoss` - new Stop Loss rate (0 means "do not use Stop Loss").
+ * `rateProfit` - new Take Profit rate (0 means "do not use Take Profit").
+
+Return value:
+ * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
 
 <a name="api_swapList"></a>
 ### `swapList` - list swap contracts
