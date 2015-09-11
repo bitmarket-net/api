@@ -201,6 +201,7 @@ Error code | Error description
 504 | The key is not authoriced to use this API method
 505 | Invalid value of the `method` parameter
 506 | Too many commands in a given time interval
+507 | Invalid nonce value (only if an old request is sent again - replay attack)
 400 | Invalid value of the `market` parameter
 401 | Invalid value of the `type` parameter
 402 | Invalid value of the `amount` parameter
@@ -216,6 +217,9 @@ Error code | Error description
 412 | Invalid value of the `type` parameter.
 413 | Invalid value of the `rateLoss` parameter.
 414 | Invalid value of the `rateProfit` parameter.
+415 | Cannot close margin because the position is not fully open
+416 | Cannot cancel margin because the position is fully open
+417 | Order cannot be fully satisfied and all or nothing was requested (no longer in use)
 300 | Internal application error
 
 API method list
@@ -262,7 +266,7 @@ Output parameters:
 
 Please note that there are three possible scenarios when a trade is submitted:
 
- 1. The trade is executed immediately, because a matched order os already present on the orderbook. 
+ 1. The trade is executed immediately, because a matched order is already present on the orderbook. 
  In such case, the fields `id` and `order` will be empty, because no order is submitted in the orderbook.
  The `balances` field indicates the new account balances after the trade.
  2. The trade is partially executed. In such case the `order` field will describe the partial order submitted in the orderbook.
@@ -493,6 +497,7 @@ Output parameters:
 Input parameters:
 
  * `id` - contract identifier.
+ * `currency` - cryptocurrency code (like "*BTC*").
 
 Output parameters:
 
