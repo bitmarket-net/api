@@ -240,6 +240,18 @@ Output parameters:
  * `balances` - object describing the funds available on the user account, with the following properties:
    * `available` - object describing free funds available in each currency.
    * `blocked` - object describing funds in active trade offers, in each currency.
+ * `account` - object describing the state of the user account, with the following properties:
+   * `turnover` - account turnover value.
+   * `commissionMaker` - commission value as market maker.
+   * `commissionTaker` - commission value as market taker.
+ * `bank_deposit_fiat` - object describing information to deposit fiat currency, one for each. Currently only PLN and EUR:
+   * `PLN`
+     * `bank_name` - name of the bank where the deposit is to be made.
+     * `pay_to` - name to whom deposit is to be made.
+     * `acc_num` - the account number where deposit is to be made.
+     * `transfer_title` - text to identify the  deposit by the user.
+   * `EUR` - same as PLN with one additional data
+     * `swift_code` - the switch code to be used to transfer EURO
 
 <a name="api_trade"></a>
 ### `trade` - submit an order
