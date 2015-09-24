@@ -462,7 +462,7 @@ Return value:
  * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
 
 <a name="api_marginModify"></a>
-### `marginModify` - open a position
+### `marginModify` - modify position parameters
 
 Input parameters:
 
