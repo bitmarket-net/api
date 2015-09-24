@@ -456,10 +456,16 @@ Input parameters:
 
  * `market` - the market on which the position must be opened.
  * `id` - position identifier.
- * `amount` - new position value.
+ * `amount` - new position value, between `fiatTotal` and `fiatOpened` (see the note)
 
 Return value:
  * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
+
+<b>Note:</b> This could be bit confusing so here is an explanation.
+Suppose your position is 100 PLN. Out of that, only 20 is used. So, you can say, cancel the 70 PLN from the unused 80 PLN. That leaves 10 PLN. Add that to the used PLN and you get 30 PLN. So to reduce your position to 30 PLN, call `marginCancel` with value of 30.
+A special case is: if 0 PLN is used, you can say cancel the 100 unused PLN and set the position to 0 PLN, in effect, removing the position altogether.
+
+From the call to `marginList`, you get `fiatTotal` and `fiatOpened` for each margin positions. If `fiatOpened` is less than `fiatTotal` (position not fully opened), then you can cancel the unopened margin and call the `marginCancel` with the value between `fiatTotal` and `fiatOpened` to reduce the position value. Moreover, if the position is not opened at all, `fiatOpened` is 0, then this will permanently remove the margin position.
 
 <a name="api_marginModify"></a>
 ### `marginModify` - modify position parameters
