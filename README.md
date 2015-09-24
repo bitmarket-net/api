@@ -466,7 +466,9 @@ Suppose your position is 100 PLN. Out of that, only 20 is used. So, you can say,
 
 A special case is: if 0 PLN is used, you can say cancel the 100 unused PLN and set the position to 0 PLN, in effect, removing the position altogether.
 
-From the call to `marginList`, you get `fiatTotal` and `fiatOpened` for each margin positions. If `fiatOpened` is less than `fiatTotal` (position not fully opened), then you can cancel the unopened margin and call the `marginCancel` with the value between `fiatTotal` and `fiatOpened` to reduce the position value. Moreover, if the position is not opened at all, `fiatOpened` is 0, then this will permanently remove the margin position.
+From the call to `marginList`, you get `fiatTotal` and `fiatOpened` for each margin positions. If `fiatOpened` is less than `fiatTotal` (position not fully opened), then you can cancel the unopened margin and call the `marginCancel` with the value between `fiatTotal` and `fiatOpened` to reduce the position value.
+
+If the position is not opened at all, `fiatOpened` is 0, and sending 0 as `amount` will permanently remove the margin position.
 
 <a name="api_marginModify"></a>
 ### `marginModify` - modify position parameters
