@@ -282,7 +282,7 @@ Please note that there are three possible scenarios when a trade is submitted:
  In such case, the fields `id` and `order` will be empty, because no order is submitted in the orderbook.
  The `balances` field indicates the new account balances after the trade.
  2. The trade is partially executed. In such case the `order` field will describe the partial order submitted in the orderbook.
- 3. The trade is not immediately exdecuted, and the order is submitted in the orderbook in full. 
+ 3. The trade is not immediately executed, and the order is submitted in the orderbook in full. 
  In such case the `order` field will contain the copy of the input parameters.
  
 <a name="api_cancel"></a>
