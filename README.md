@@ -221,6 +221,8 @@ Error code | Error description
 416 | Cannot cancel margin because the position is fully open
 417 | Order cannot be fully satisfied and all or nothing was requested (no longer in use)
 300 | Internal application error
+301 | Withdrawal of funds is blocked temporarily
+302 | Trading is blocked temporarily
 
 API method list
 ---------------
