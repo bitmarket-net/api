@@ -221,6 +221,8 @@ Error code | Error description
 416 | Cannot cancel margin because the position is fully open
 417 | Order cannot be fully satisfied and all or nothing was requested (no longer in use)
 300 | Internal application error
+301 | Withdrawal of funds is blocked temporarily
+302 | Trading is blocked temporarily
 
 API method list
 ---------------
@@ -282,7 +284,7 @@ Please note that there are three possible scenarios when a trade is submitted:
  In such case, the fields `id` and `order` will be empty, because no order is submitted in the orderbook.
  The `balances` field indicates the new account balances after the trade.
  2. The trade is partially executed. In such case the `order` field will describe the partial order submitted in the orderbook.
- 3. The trade is not immediately exdecuted, and the order is submitted in the orderbook in full. 
+ 3. The trade is not immediately executed, and the order is submitted in the orderbook in full. 
  In such case the `order` field will contain the copy of the input parameters.
  
 <a name="api_cancel"></a>
@@ -456,13 +458,22 @@ Input parameters:
 
  * `market` - the market on which the position must be opened.
  * `id` - position identifier.
- * `amount` - new position value.
+ * `amount` - new position value, between `fiatTotal` and `fiatOpened` (see the note)
 
 Return value:
  * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
 
+<b>Note:</b> This could be bit confusing so here is an explanation.
+Suppose your position is 100 PLN. Out of that, only 20 is used. So, you can say, cancel the 70 PLN from the unused 80 PLN. That leaves 10 PLN. Add that to the used PLN and you get 30 PLN. So to reduce your position to 30 PLN, call `marginCancel` with value of 30.
+
+A special case is: if 0 PLN is used, you can say cancel the 100 unused PLN and set the position to 0 PLN, in effect, removing the position altogether.
+
+From the call to `marginList`, you get `fiatTotal` and `fiatOpened` for each margin positions. If `fiatOpened` is less than `fiatTotal` (position not fully opened), then you can cancel the unopened margin and call the `marginCancel` with the value between `fiatTotal` and `fiatOpened` to reduce the position value.
+
+If the position is not opened at all, `fiatOpened` is 0, and sending 0 as `amount` will permanently remove the margin position.
+
 <a name="api_marginModify"></a>
-### `marginModify` - open a position
+### `marginModify` - modify position parameters
 
 Input parameters:
 
