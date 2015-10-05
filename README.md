@@ -31,6 +31,8 @@ Table of contents
    * [marginClose](#api_marginClose) - close a position
    * [marginCancel](#api_marginCancel) - cancel opening a position
    * [marginModify](#api_marginModify) - modify position parameters
+   * [marginBalanceAdd](#api_marginBalanceAdd) - add to margin balance from deposit
+   * [marginBalanceRemove](#api_marginBalanceRemove) - Remove from margin balance and add to deposit
    * [swapList](#api_swapList) - swap contract list
    * [swapOpen](#api_swapOpen) - open swap contract
    * [swapClose](#api_swapClose) - close swap contract
@@ -485,6 +487,28 @@ Input parameters:
 
 Return value:
  * `long`, `short`, `value` - account status after opening the position (same as with the `marginList` function).
+
+<a name="api_marginBalanceAdd"></a>
+### `marginBalanceAdd` - add to margin balance from deposit
+
+Input parameters:
+
+ * `market` - name of the market (like BTCPLN).
+ * `amount` - the amount to transfer, in float.
+
+Output value:
+ * `margin_balance` - the margin balance after addition.
+
+<a name="api_marginBalanceRemove"></a>
+### `marginBalanceRemove` - remove from margin balance and add to deposit
+
+Input parameters:
+
+ * `market` - name of the market (like BTCPLN).
+ * `amount` - the amount to transfer, in float.
+
+Output value:
+ * `margin_balance` - the margin balance after removal.
 
 <a name="api_swapList"></a>
 ### `swapList` - list swap contracts
