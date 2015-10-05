@@ -32,7 +32,7 @@ Table of contents
    * [marginCancel](#api_marginCancel) - cancel opening a position
    * [marginModify](#api_marginModify) - modify position parameters
    * [marginBalanceAdd](#api_marginBalanceAdd) - add to margin balance from deposit
-   * [marginBalanceRemove](#api_marginBalanceRemove) - Remove from margin balance and add to deposit
+   * [marginBalanceRemove](#api_marginBalanceRemove) - remove from margin balance and add to deposit
    * [swapList](#api_swapList) - swap contract list
    * [swapOpen](#api_swapOpen) - open swap contract
    * [swapClose](#api_swapClose) - close swap contract
