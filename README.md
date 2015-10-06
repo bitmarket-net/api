@@ -25,6 +25,8 @@ Table of contents
    * [trades](#api_trades) - list of user trades
    * [history](#api_history) - account operation history
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
+   * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
+   * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
    * [deposit](#api_deposit) - deposit cryptocurrency
    * [marginList](#api_marginList) - list of open positions
    * [marginOpen](#api_marginOpen) - open a long or short position
@@ -226,6 +228,7 @@ Error code | Error description
 300 | Internal application error
 301 | Withdrawal of funds is blocked temporarily
 302 | Trading is blocked temporarily
+303 | Fast fiat withdrawal is unavailable now
 
 API method list
 ---------------
@@ -378,6 +381,43 @@ Input parameters:
  * `address` - wallet address where the funds must be withdrawn.
 
 Output value: the withdrawal transaction ID.
+
+<a name="api_withdrawFiat"></a>
+### `withdrawFiat` - withdraw fiat currency
+
+Input parameters:
+
+ * `currency` - fiat currency, like EUR or PLN.
+ * `amount` - the amount to withdraw.
+ * `account` - bank account code for withdrawal.
+ * `account2` - the swift code of the bank (only if the currency is EUR).
+ * `withdrawal_note` - a 10 character withdrawal note specified by user (only if the currency is PLN).
+ * `test_only` - mode of the operation:
+   * *"y"* - just perform basic validation and return the fee that will be charged. No withdrawal is made.
+   * *"n"* - performs the withdrawal. This is the default mode.
+
+Output parameters:
+
+ * `fee` - the fee charged for the transaction
+ * `balance` - the fiat currency balance after the transaction (when test_only is n)
+
+<a name="api_withdrawFiatFast"></a>
+### `withdrawFiatFast` - withdraw fiat currency (fast withdrawal)
+
+Input parameters:
+
+ * `currency` - fiat currency (only PLN).
+ * `amount` - the amount to withdraw.
+ * `account` - bank account code for withdrawal.
+ * `withdrawal_note` - a 10 character withdrawal note specified by user.
+ * `test_only` - mode of the operation:
+   * *"y"* - just perform basic validation and return the fee that will be charged. No withdrawal is made.
+   * *"n"* - performs the withdrawal. This is the default mode.
+
+Output parameters:
+
+ * `fee` - the fee charged for the transaction
+ * `balance` - the fiat currency balance after the transaction (when test_only is n)
 
 <a name="api_deposit"></a>
 ### `deposit` - deposit cryptocurrency
