@@ -207,6 +207,7 @@ Error code | Error description
 506 | Too many commands in a given time interval
 507 | Invalid nonce value (only if an old request is sent again - replay attack)
 508 | Invalid parameter value for method
+509 | The account has been banned
 400 | Invalid value of the `market` parameter
 401 | Invalid value of the `type` parameter
 402 | Invalid value of the `amount` parameter
