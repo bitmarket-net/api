@@ -28,6 +28,7 @@ Table of contents
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
    * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
    * [deposit](#api_deposit) - deposit cryptocurrency
+   * [transfer](#api_transfer) - transfer cryptocurrency to another bitmarket account  
    * [marginList](#api_marginList) - list of open positions
    * [marginOpen](#api_marginOpen) - open a long or short position
    * [marginClose](#api_marginClose) - close a position
@@ -428,6 +429,20 @@ Input parameters:
  * `currency` - cryptocurrency code (like "*BTC*").
 
 Output value: the address for cryptocurrency deposits to the account.
+
+<a name="api_transfer"></a>
+### `transfer` - transfer cryptocurrency to another bitmarket account
+
+Input parameters:
+
+ * `currency` - cryptocurrency code (only "*BTC*" and "*LTC*").
+ * `amount` - amount to transfer.
+ * `address` - login name of the account to which fund will be transferred.
+
+Output parameters:
+
+ * `currency` - cryptocurrency code
+ * `balance` - the cryptocurrency balance after the transaction
 
 <a name="api_marginList"></a>
 ### `marginList` - list of open positions
