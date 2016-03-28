@@ -28,7 +28,8 @@ Table of contents
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
    * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
    * [deposit](#api_deposit) - deposit cryptocurrency
-   * [transfer](#api_transfer) - transfer cryptocurrency to another bitmarket account  
+   * [transfer](#api_transfer) - transfer cryptocurrency to another bitmarket account (internal transfer) 
+   * [transfers](#api_transfers) - withdrawal history of internal transfer type of operations
    * [marginList](#api_marginList) - list of open positions
    * [marginOpen](#api_marginOpen) - open a long or short position
    * [marginClose](#api_marginClose) - close a position
@@ -227,6 +228,8 @@ Error code | Error description
 415 | Cannot close margin because the position is not fully open
 416 | Cannot cancel margin because the position is fully open
 417 | Order cannot be fully satisfied and all or nothing was requested (no longer in use)
+418 | Operation cannot be performed
+419 | Recipient has been banned
 300 | Internal application error
 301 | Withdrawal of funds is blocked temporarily
 302 | Trading is blocked temporarily
@@ -431,7 +434,7 @@ Input parameters:
 Output value: the address for cryptocurrency deposits to the account.
 
 <a name="api_transfer"></a>
-### `transfer` - transfer cryptocurrency to another bitmarket account
+### `transfer` - transfer cryptocurrency to another bitmarket account, provided that the recipient is not banned.
 
 Input parameters:
 
@@ -443,6 +446,26 @@ Output parameters:
 
  * `currency` - cryptocurrency code
  * `balance` - the cryptocurrency balance after the transaction
+
+<a name="api_transfers"></a>
+### `transfers` - withdrawal history of internal transfer type of operations
+
+Input parameters:
+
+ * `count` - number of list elements, possible values: from 1 to 1000 (1000 is the default).
+ * `start` - number of the first element, zero based (0 is the default).
+ 
+Output parameters:
+
+ * `total` - total number of elements.
+ * `start` - number of the first list element.
+ * `count` - number of returned list elements.
+ * `results` - the list of history entries, each object has the following parameters:
+   * `transaction_id` - unique id of the transaction.
+   * `receiver` - login name of the user to whom the transfer was made.
+   * `currency` - crypto currency transferred.
+   * `amount` - amount of crypto currency transferred.
+   * `time` - operation time.
 
 <a name="api_marginList"></a>
 ### `marginList` - list of open positions
