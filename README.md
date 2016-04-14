@@ -24,6 +24,9 @@ Table of contents
    * [orders](#api_orders) - list of user orders
    * [trades](#api_trades) - list of user trades
    * [history](#api_history) - account operation history
+   * [tradingdesk](#api_tradingdesk) - purchase fiat currency with crypto currency via tradingdesk
+   * [history](#api_tradingdeskStatus) - check the status of tradingdesk order
+   * [history](#api_tradingdeskConfirm) - confirm the tradingdesk order
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
    * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
@@ -210,6 +213,7 @@ Error code | Error description
 507 | Invalid nonce value (only if an old request is sent again - replay attack)
 508 | Invalid parameter value for method
 509 | The account has been banned
+510 | The account is not name verified
 400 | Invalid value of the `market` parameter
 401 | Invalid value of the `type` parameter
 402 | Invalid value of the `amount` parameter
@@ -230,6 +234,10 @@ Error code | Error description
 417 | Order cannot be fully satisfied and all or nothing was requested (no longer in use)
 418 | Operation cannot be performed
 419 | Recipient has been banned
+420 | Invalid Fiat/Crypto for tradingdesk
+421 | Amount is too high
+422 | Tradingdesk purchase quota exceeded
+423 | Tradingdesk invalid transaction id
 300 | Internal application error
 301 | Withdrawal of funds is blocked temporarily
 302 | Trading is blocked temporarily
@@ -375,6 +383,57 @@ Output parameters:
      * *"order"* - order submission.
      * *"trade"* - market trade.
      * *"cancel"* - order cancellation.
+
+<a name="api_tradingdesk"></a>
+### `tradingdesk` - purchase fiat currency with crypto currency via tradingdesk
+
+Input parameters:
+
+ * `fiat` - fiat currency code (like "*PLN*").
+ * `crypto` - crypto currency code (like "*BTC*").
+ * `amount` - amount of fiat currency to be purchased.
+
+Output parameters:
+
+ * `currency_fiat` - fiat currency code (like "*PLN*").
+ * `currency_crypto` - crypto currency code (like "*BTC*").
+ * `fiat_amount` - amount of fiat currency to be purchased.
+ * `crypto_offer` - amount of crypto currency to be paid if the order is confirmed.
+ * `rate` - rate offered for the purchase order.
+ * `transaction_id` - unique id that represent this order.
+ * `expire_after` - timestamp (as per the timezone of the server) within which the order must be confirmed.
+ * `expire_after_formatted` - expire date time.
+ * `status` - status of the order.
+
+<a name="api_tradingdeskStatus"></a>
+### `tradingdeskStatus` - check the status of tradingdesk order
+
+Input parameters:
+
+ * `id` - unique id that represent a tradingdesk order.
+
+Output parameters:
+
+ * `currency_fiat` - fiat currency code (like "*PLN*").
+ * `currency_crypto` - crypto currency code (like "*BTC*").
+ * `fiat_amount` - amount of fiat currency to be purchased.
+ * `crypto_offer` - amount of crypto currency to be paid if the order is confirmed.
+ * `rate` - rate offered for the purchase order.
+ * `transaction_id` - unique id that represent this order.
+ * `expire_after` - timestamp (as per the timezone of the server) within which the order must be confirmed.
+ * `expire_after_formatted` - expire date time.
+ * `status` - status of the order (P yet to be confirmed, E expired, Y processed)
+
+<a name="api_tradingdeskConfirm"></a>
+### `tradingdeskConfirm` - confirm the tradingdesk order
+
+Input parameters:
+
+ * `id` - unique id that represent a tradingdesk order.
+
+Output parameters:
+
+Non error code, implying that the order was confirmed.
 
 <a name="api_withdraw"></a>
 ### `withdraw` - withdraw cryptocurrency
