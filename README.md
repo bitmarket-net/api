@@ -25,8 +25,8 @@ Table of contents
    * [trades](#api_trades) - list of user trades
    * [history](#api_history) - account operation history
    * [tradingdesk](#api_tradingdesk) - purchase fiat currency with crypto currency via tradingdesk
-   * [history](#api_tradingdeskStatus) - check the status of tradingdesk order
-   * [history](#api_tradingdeskConfirm) - confirm the tradingdesk order
+   * [tradingdeskStatus](#api_tradingdeskStatus) - check the status of tradingdesk order
+   * [tradingdeskConfirm](#api_tradingdeskConfirm) - confirm the tradingdesk order
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
    * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
