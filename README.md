@@ -24,11 +24,15 @@ Table of contents
    * [orders](#api_orders) - list of user orders
    * [trades](#api_trades) - list of user trades
    * [history](#api_history) - account operation history
+   * [tradingdesk](#api_tradingdesk) - purchase fiat currency with crypto currency via tradingdesk
+   * [tradingdeskStatus](#api_tradingdeskStatus) - check the status of tradingdesk order
+   * [tradingdeskConfirm](#api_tradingdeskConfirm) - confirm the tradingdesk order
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
    * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
    * [deposit](#api_deposit) - deposit cryptocurrency
-   * [transfer](#api_transfer) - transfer cryptocurrency to another bitmarket account  
+   * [transfer](#api_transfer) - transfer cryptocurrency to another bitmarket account (internal transfer) 
+   * [transfers](#api_transfers) - withdrawal history of internal transfer type of operations
    * [marginList](#api_marginList) - list of open positions
    * [marginOpen](#api_marginOpen) - open a long or short position
    * [marginClose](#api_marginClose) - close a position
@@ -209,6 +213,7 @@ Error code | Error description
 507 | Invalid nonce value (only if an old request is sent again - replay attack)
 508 | Invalid parameter value for method
 509 | The account has been banned
+510 | The account is not name verified
 400 | Invalid value of the `market` parameter
 401 | Invalid value of the `type` parameter
 402 | Invalid value of the `amount` parameter
@@ -227,6 +232,12 @@ Error code | Error description
 415 | Cannot close margin because the position is not fully open
 416 | Cannot cancel margin because the position is fully open
 417 | Order cannot be fully satisfied and all or nothing was requested (no longer in use)
+418 | Operation cannot be performed
+419 | Recipient has been banned
+420 | Invalid Fiat/Crypto for tradingdesk
+421 | Amount is too high
+422 | Tradingdesk purchase quota exceeded
+423 | Tradingdesk invalid transaction id
 300 | Internal application error
 301 | Withdrawal of funds is blocked temporarily
 302 | Trading is blocked temporarily
@@ -373,6 +384,57 @@ Output parameters:
      * *"trade"* - market trade.
      * *"cancel"* - order cancellation.
 
+<a name="api_tradingdesk"></a>
+### `tradingdesk` - purchase fiat currency with crypto currency via tradingdesk
+
+Input parameters:
+
+ * `fiat` - fiat currency code (like "*PLN*").
+ * `crypto` - crypto currency code (like "*BTC*").
+ * `amount` - amount of fiat currency to be purchased.
+
+Output parameters:
+
+ * `currency_fiat` - fiat currency code (like "*PLN*").
+ * `currency_crypto` - crypto currency code (like "*BTC*").
+ * `fiat_amount` - amount of fiat currency to be purchased.
+ * `crypto_offer` - amount of crypto currency to be paid if the order is confirmed.
+ * `rate` - rate offered for the purchase order.
+ * `transaction_id` - unique id that represent this order.
+ * `expire_after` - timestamp (as per the timezone of the server) within which the order must be confirmed.
+ * `expire_after_formatted` - expire date time.
+ * `status` - status of the order.
+
+<a name="api_tradingdeskStatus"></a>
+### `tradingdeskStatus` - check the status of tradingdesk order
+
+Input parameters:
+
+ * `id` - unique id that represent a tradingdesk order.
+
+Output parameters:
+
+ * `currency_fiat` - fiat currency code (like "*PLN*").
+ * `currency_crypto` - crypto currency code (like "*BTC*").
+ * `fiat_amount` - amount of fiat currency to be purchased.
+ * `crypto_offer` - amount of crypto currency to be paid if the order is confirmed.
+ * `rate` - rate offered for the purchase order.
+ * `transaction_id` - unique id that represent this order.
+ * `expire_after` - timestamp (as per the timezone of the server) within which the order must be confirmed.
+ * `expire_after_formatted` - expire date time.
+ * `status` - status of the order (P yet to be confirmed, E expired, Y processed)
+
+<a name="api_tradingdeskConfirm"></a>
+### `tradingdeskConfirm` - confirm the tradingdesk order
+
+Input parameters:
+
+ * `id` - unique id that represent a tradingdesk order.
+
+Output parameters:
+
+Non error code, implying that the order was confirmed.
+
 <a name="api_withdraw"></a>
 ### `withdraw` - withdraw cryptocurrency
 
@@ -431,7 +493,7 @@ Input parameters:
 Output value: the address for cryptocurrency deposits to the account.
 
 <a name="api_transfer"></a>
-### `transfer` - transfer cryptocurrency to another bitmarket account
+### `transfer` - transfer cryptocurrency to another bitmarket account, provided that the recipient is not banned.
 
 Input parameters:
 
@@ -443,6 +505,26 @@ Output parameters:
 
  * `currency` - cryptocurrency code
  * `balance` - the cryptocurrency balance after the transaction
+
+<a name="api_transfers"></a>
+### `transfers` - withdrawal history of internal transfer type of operations
+
+Input parameters:
+
+ * `count` - number of list elements, possible values: from 1 to 1000 (1000 is the default).
+ * `start` - number of the first element, zero based (0 is the default).
+ 
+Output parameters:
+
+ * `total` - total number of elements.
+ * `start` - number of the first list element.
+ * `count` - number of returned list elements.
+ * `results` - the list of history entries, each object has the following parameters:
+   * `transaction_id` - unique id of the transaction.
+   * `receiver` - login name of the user to whom the transfer was made.
+   * `currency` - crypto currency transferred.
+   * `amount` - amount of crypto currency transferred.
+   * `time` - operation time.
 
 <a name="api_marginList"></a>
 ### `marginList` - list of open positions
