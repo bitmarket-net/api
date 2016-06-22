@@ -24,6 +24,7 @@ Table of contents
    * [orders](#api_orders) - list of user orders
    * [trades](#api_trades) - list of user trades
    * [history](#api_history) - account operation history
+   * [withdrawals](#api_withdrawals) - list of completed Fiat/Crypto withdrawals
    * [tradingdesk](#api_tradingdesk) - purchase fiat currency with crypto currency via tradingdesk
    * [tradingdeskStatus](#api_tradingdeskStatus) - check the status of tradingdesk order
    * [tradingdeskConfirm](#api_tradingdeskConfirm) - confirm the tradingdesk order
@@ -383,6 +384,35 @@ Output parameters:
      * *"order"* - order submission.
      * *"trade"* - market trade.
      * *"cancel"* - order cancellation.
+
+<a name="api_withdrawals"></a>
+### `withdrawals` - list of completed Fiat/Crypto withdrawals
+
+Input parameters:
+
+ * `count` - number of list elements, possible values: from 1 to 1000 (1000 is the default).
+ * `start` - number of the first element, zero based (0 is the default).
+ 
+Output parameters:
+
+ * `total` - total number of elements.
+ * `start` - number of the first list element.
+ * `count` - number of returned list elements.
+ * `results` - the list of withdrawal entries, each object has the following parameters:
+   * `id` - withdraw identifier (withdraw_id from withdraw table).
+   * `transaction_id` - transaction ID in the blockchain if withdraw_type is Cryptocurrency.
+   * `received_in` - cryptocurrency address or bank account number (for PLN withdrawal via bank).
+   * `currency` - crypto / fiat currency code like BTC or PLN.
+   * `amount` - amount withdrawn.
+   * `time` - timestamp when the withdrawal was requested.
+   * `commission` - withdrawal commission/fee.
+   * `withdraw_type` - withdrawal type, such as:
+     * *"Cryptocurrency"* - withdrawal of cryptocurrency like BTC or LTC.
+     * *"BlueCash"* - withdrawal of PLN via BlueCash.
+     * *"Bank transfer"* - withdrawal of fiat currency (PLN, EUR) via bank transfer.
+     * *"Express"* - withdrawal of PLN via fast bank transfer.
+     * *"PolskiePrzelewy"* - withdrawal of PLN via ATM transfer using Polskie Przelewy.
+     * *"EgoPay"* - withdrawal of EUR via EgoPay.
 
 <a name="api_tradingdesk"></a>
 ### `tradingdesk` - purchase fiat currency with crypto currency via tradingdesk
