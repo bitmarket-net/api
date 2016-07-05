@@ -30,6 +30,7 @@ Table of contents
    * [tradingdeskConfirm](#api_tradingdeskConfirm) - confirm the tradingdesk order
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
+   * [withdrawPLNPP](#api_withdrawPLNPP) - withdraw fiat currency (only PLN for now) via ATM (using Polskie Przelewy service)
    * [withdrawFiatFast](#api_withdrawFiatFast) - withdraw fiat currency (fast withdrawal)
    * [deposit](#api_deposit) - deposit cryptocurrency
    * [transfer](#api_transfer) - transfer cryptocurrency to another bitmarket account (internal transfer) 
@@ -243,6 +244,7 @@ Error code | Error description
 301 | Withdrawal of funds is blocked temporarily
 302 | Trading is blocked temporarily
 303 | Fast fiat withdrawal is unavailable now
+304 | Withdrawal service is unavailable now
 
 API method list
 ---------------
@@ -485,6 +487,24 @@ Input parameters:
  * `amount` - the amount to withdraw.
  * `account` - bank account code for withdrawal.
  * `account2` - the swift code of the bank (only if the currency is EUR).
+ * `withdrawal_note` - a 10 character withdrawal note specified by user (only if the currency is PLN).
+ * `test_only` - mode of the operation:
+   * *"y"* - just perform basic validation and return the fee that will be charged. No withdrawal is made.
+   * *"n"* - performs the withdrawal. This is the default mode.
+
+Output parameters:
+
+ * `fee` - the fee charged for the transaction
+ * `balance` - the fiat currency balance after the transaction (when test_only is n)
+
+<a name="api_withdrawPLNPP"></a>
+### `withdrawPLNPP` - withdraw fiat currency (only PLN for now) via ATM (using Polskie Przelewy service)
+
+Input parameters:
+
+ * `currency` - fiat currency (only PLN for now).
+ * `amount` - the amount to withdraw.
+ * `phone` - mobile phone number to receive the ATM Access code from Polskie Przelewy.
  * `withdrawal_note` - a 10 character withdrawal note specified by user (only if the currency is PLN).
  * `test_only` - mode of the operation:
    * *"y"* - just perform basic validation and return the fee that will be charged. No withdrawal is made.
