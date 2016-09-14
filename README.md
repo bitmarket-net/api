@@ -286,6 +286,9 @@ Input parameters:
  * `type` - order type: buy (*"bid"* or *"buy"*) or sell (*"ask"* or *"sell"*).
  * `amount` - order amount (in cryptocurrency).
  * `rate` - exchange rate.
+ * `allOrNothing` - flag to specify whether the order should be fulfilled completely or not.
+   * *"1"* - The order must be fulfilled completely and the entire amount should be traded. If it is not possible, it results in error.
+   * *"0"* - The order can be fulfilled partially. Rest of the amount will be kept in orderbook so that it can be traded later. This is the default behaviour if the parameter is not send.
 
 Output parameters:
 
