@@ -102,7 +102,7 @@ Proper NTP software, such as the **ntpd** Unix daemon, can be used to ensure thi
 <a name="info_limits"></a>
 ### Call limits
 
-The number of API calls that can be made on the user account is limited to 600 calls within 10 minutes. 
+The number of API calls that can be made on the user account is limited to 200 calls within 10 minutes. 
 This limit is global for the user account, regardless of how many API keys the user is using.
 
 <a name="info_responses"></a>
