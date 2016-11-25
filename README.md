@@ -446,6 +446,8 @@ Output parameters:
 Input parameters:
 
  * `id` - unique id that represent a tradingdesk order.
+ * `fiat` - fiat currency code (like "*PLN*").
+ * `crypto` - crypto currency code (like "*BTC*").
 
 Output parameters:
 
@@ -465,6 +467,8 @@ Output parameters:
 Input parameters:
 
  * `id` - unique id that represent a tradingdesk order.
+ * `fiat` - fiat currency code (like "*PLN*").
+ * `crypto` - crypto currency code (like "*BTC*").
 
 Output parameters:
 
