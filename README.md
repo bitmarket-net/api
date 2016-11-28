@@ -28,6 +28,9 @@ Table of contents
    * [tradingdesk](#api_tradingdesk) - purchase fiat currency with crypto currency via tradingdesk
    * [tradingdeskStatus](#api_tradingdeskStatus) - check the status of tradingdesk order
    * [tradingdeskConfirm](#api_tradingdeskConfirm) - confirm the tradingdesk order
+   * [cryptotradingdesk](#api_cryptotradingdesk) - sell fiat currency for crypto currency via cryptotradingdesk
+   * [cryptotradingdeskStatus](#api_cryptotradingdeskStatus) - check the status of cryptotradingdesk order
+   * [cryptotradingdeskConfirm](#api_cryptotradingdeskConfirm) - confirm the cryptotradingdesk order
    * [withdraw](#api_withdraw) - withdraw cryptocurrency
    * [withdrawFiat](#api_withdrawFiat) - withdraw fiat currency
    * [withdrawPLNPP](#api_withdrawPLNPP) - withdraw fiat currency (only PLN for now) via ATM (using Polskie Przelewy service)
@@ -473,6 +476,65 @@ Input parameters:
 Output parameters:
 
 Non error code, implying that the order was confirmed.
+
+<a name="api_cryptotradingdesk"></a>
+### `cryptotradingdesk` - sell fiat currency for crypto currency via cryptotradingdesk
+
+Input parameters:
+
+ * `fiat` - fiat currency code (like "*PLN*").
+ * `crypto` - crypto currency code (like "*BTC*").
+ * `amount` - amount of fiat currency to be sold.
+ * `crypto_receive_address` - address where the received cryptos will be transferred.
+
+Output parameters:
+
+ * `currency_fiat` - fiat currency code (like "*PLN*").
+ * `currency_crypto` - crypto currency code (like "*BTC*").
+ * `fiat_amount` - amount of fiat currency to be sold.
+ * `crypto_receive_address` - address where the received cryptos will be transferred.
+ * `crypto_offer` - amount of crypto currency that will be received if the order is confirmed.
+ * `rate` - rate offered for the sell order.
+ * `transaction_id` - unique id that represent this order.
+ * `expire_after` - timestamp (as per the timezone of the server) within which the order must be confirmed.
+ * `expire_after_formatted` - expire date time.
+ * `status` - status of the order.
+
+<a name="api_cryptotradingdeskStatus"></a>
+### `cryptotradingdeskStatus` - check the status of cryptotradingdesk order
+
+Input parameters:
+
+ * `id` - unique id that represent a cryptotradingdesk order.
+ * `fiat` - fiat currency code for the order (like "*PLN*").
+ * `crypto` - crypto currency code for the order (like "*BTC*").
+
+Output parameters:
+
+ * `currency_fiat` - fiat currency code (like "*PLN*").
+ * `currency_crypto` - crypto currency code (like "*BTC*").
+ * `fiat_amount` - amount of fiat currency to be sold.
+ * `crypto_offer` - amount of crypto currency that will be received if the order is confirmed.
+ * `rate` - rate offered for the sell order.
+ * `transaction_id` - unique id that represent this order.
+ * `expire_after` - timestamp (as per the timezone of the server) within which the order must be confirmed.
+ * `expire_after_formatted` - expire date time.
+ * `status` - status of the order (P yet to be confirmed, X confirmed and under processing, E expired, Y finished, N cancelled).
+ * `blockchaintx` - transaction hash if the order is finished and the cryptos have been transferred to the requested address.
+
+<a name="api_cryptotradingdeskConfirm"></a>
+### `cryptotradingdeskConfirm` - confirm the cryptotradingdesk order
+
+Input parameters:
+
+ * `id` - unique id that represent a cryptotradingdesk order.
+ * `fiat` - fiat currency code for the order (like "*PLN*").
+ * `crypto` - crypto currency code for the order (like "*BTC*").
+
+Output parameters:
+
+Non error code, implying that the order was confirmed.
+-----
 
 <a name="api_withdraw"></a>
 ### `withdraw` - withdraw cryptocurrency
