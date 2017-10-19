@@ -325,6 +325,8 @@ Input parameters:
 Output parameters:
 
  * `balances` - account balances after canceling the order.
+
+Change: If the order cannot be cancelled because it is no longer active, the error code of `411` is returned now instead of `406`.
  
 <a name="api_orders"></a>
 ### `orders` - list of user orders
@@ -339,8 +341,6 @@ Otherwise an object is returned with the following fields:
 
  * `buy` - list of buy orders (in the format identical to that returned from the `order` method).
  * `sell` - list of sell orders.
-
-Change: If the order cannot be cancelled because it is no longer active, the error code of `411` is returned now instead of `406`.
 
 <a name="api_trades"></a>
 ### `trades` - list of user trades
