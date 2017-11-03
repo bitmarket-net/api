@@ -219,6 +219,7 @@ Error code | Error description
 508 | Invalid parameter value for method
 509 | The account has been banned
 510 | The account is not name verified
+511 | Access disabled
 400 | Invalid value of the `market` parameter
 401 | Invalid value of the `type` parameter
 402 | Invalid value of the `amount` parameter
@@ -325,6 +326,8 @@ Input parameters:
 Output parameters:
 
  * `balances` - account balances after canceling the order.
+
+Change: If the order cannot be cancelled because it is no longer active, the error code of `411` is returned now instead of `406`.
  
 <a name="api_orders"></a>
 ### `orders` - list of user orders
