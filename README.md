@@ -105,8 +105,20 @@ Proper NTP software, such as the **ntpd** Unix daemon, can be used to ensure thi
 <a name="info_limits"></a>
 ### Call limits
 
-The number of API calls that can be made on the user account is limited to 200 calls within 10 minutes. 
-This limit is global for the user account, regardless of how many API keys the user is using.
+The number of API calls that can be made on the user account is limited to:
+
+* swap contract creation - 100 per day
+* margin contract creation - 100 per day
+* buy/sell offer creation - 400 per day
+* trade - 400 per day
+
+Please have in mind that other security limits may apply.
+
+We reserve right to limit/block any account/IP address/subnet that is "scalping"
+without generating reasonable turnaround on our exchange.
+
+Limits are global for the user account, regardless of how many API keys and IP
+addresses the user is using.
 
 <a name="info_responses"></a>
 ### Server responses
@@ -219,6 +231,7 @@ Error code | Error description
 508 | Invalid parameter value for method
 509 | The account has been banned
 510 | The account is not name verified
+511 | API access is globaly temporarily disabled
 400 | Invalid value of the `market` parameter
 401 | Invalid value of the `type` parameter
 402 | Invalid value of the `amount` parameter
