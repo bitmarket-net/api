@@ -122,7 +122,7 @@ addresses the user is using.
 
 Users are not allowed to send their automated ( bot generated ) queries
 to any other transactional subsystem than our private API,
-even if that subsystem is publicly available.
+even if that subsystem is publicly available/reachable.
 Users breaking this rule will be banned and have their accounts closed.
 
 <a name="info_responses"></a>
