@@ -108,9 +108,9 @@ Proper NTP software, such as the **ntpd** Unix daemon, can be used to ensure thi
 The number of API calls that can be made on the user account is limited to:
 
 * swap contract creation - 100 per day
-* margin contract creation - 100 per day
-* buy/sell offer creation - 400 per day
-* trade - 400 per day
+* margin contract creation/alteration - 100 per day
+* buy/sell offer creation - 600 per day
+* trade - 600 per day
 
 Please have in mind that other security limits may apply.
 
