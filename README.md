@@ -819,6 +819,7 @@ Output parameters:
 
 Input parameters:
 
+ * `currency` - cryptocurrency code (like "*BTC*").
  * `id` - contract identifier.
  * `currency` - cryptocurrency code (like "*BTC*").
 
