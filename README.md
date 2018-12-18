@@ -432,13 +432,7 @@ Output parameters:
    * `amount` - amount withdrawn.
    * `time` - timestamp when the withdrawal was requested.
    * `commission` - withdrawal commission/fee.
-   * `withdraw_type` - withdrawal type, such as:
-     * *"Cryptocurrency"* - withdrawal of cryptocurrency like BTC or LTC.
-     * *"BlueCash"* - withdrawal of PLN via BlueCash.
-     * *"Bank transfer"* - withdrawal of fiat currency (PLN, EUR) via bank transfer.
-     * *"Express"* - withdrawal of PLN via fast bank transfer.
-     * *"PolskiePrzelewy"* - withdrawal of PLN via ATM transfer using Polskie Przelewy.
-     * *"EgoPay"* - withdrawal of EUR via EgoPay.
+   * `withdraw_type` - withdrawal type
 
 <a name="api_tradingdesk"></a>
 ### `tradingdesk` - purchase fiat currency with crypto currency via tradingdesk
@@ -562,6 +556,10 @@ Input parameters:
  * `amount` - amount to withdraw.
  * `currency` - cryptocurrency code (like *"BTC"*).
  * `address` - wallet address where the funds must be withdrawn.
+ 
+ additional optional parameter for XRP withdrawals exclusively:
+ 
+ * `ripple_destination_tag` - payment destination tag - often used by exchanges
 
 Output value: the withdrawal transaction ID.
 
